@@ -16,4 +16,4 @@ training:
   eval_iters: 200
 
 device:
-  type: 'cuda'  # or 'cpu' based on availability
+  type: 'cpu'  # or 'cuda' based on availability
