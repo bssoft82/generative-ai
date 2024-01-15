@@ -1,16 +1,19 @@
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
 import logging
-import os
-from utils.config import read_config
-from utils.logger import setup_logging
+
+from src.utils.config import read_config
+from src.utils.logger import setup_logging
 
 def main():
     # Read configuration
-    config_path = 'config/config.yaml'
-    log_config_path = 'config/log_config.yaml'
+    config_path = '../../config/model_config.yaml'
+    log_config_path = '../../config/log_config.yaml'
     config = read_config(config_path)
 
     # Configure logging
-    log_file = 'logs/app.log'
+    log_file = '../../logs/app.log'
     setup_logging(log_file, log_config_path)
 
     logging.info("Starting the application.")
