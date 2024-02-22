@@ -5,12 +5,18 @@ import torch
 class NeuralNetwork(torch.nn.Module):
     def __init__(self, img_size):
         """
-        Constructor for the Net class.
+        Initializes a neural network with the given image size.
+
+        Parameters:
+            img_size (int): The size of the input image.
+
+        Returns:
+            None
         """
         super(NeuralNetwork, self).__init__()
         self.image_size = img_size
         self.fc1 = torch.nn.Linear(img_size**2, 128)  # 784 -> 128
-        self.fc2 = torch.nn.Linear(128, 10)  # 128 -> 10
+        self.fc2 = torch.nn.Linear(128, 1000)  # 128 -> 10
 
     def forward(self, x):
         """

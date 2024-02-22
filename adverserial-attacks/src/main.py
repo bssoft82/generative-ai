@@ -1,4 +1,5 @@
 import logging
+import os
 import matplotlib
 import json
 import matplotlib.pyplot as plt
@@ -44,19 +45,28 @@ def load_data (root_folder, image_size):
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, shuffle=False)
     return train_dataset, test_dataset, train_loader, test_loader
 
-def pred_own_nn_model():
-    model = NeuralNetwork(image_size)
-    model.load_state_dict(torch.load('./models/model.pth'))
+def pred_own_nn_model(norm, train_again = False):
+    model_path = "adverserial-attacks/models/model.pth"
+    if os.path.isfile(model_path) and not train_again:
+        print(f"Loading existing model from {model_path}")
+        model = NeuralNetwork(image_size)
+        model.load_state_dict(torch.load(model_path))
+    else:
+        print("Training a new model")
+        model = NeuralNetwork(image_size)
+        # Define the loss function
+        criterion = nn.CrossEntropyLoss()
+
+        # Define the optimization algorithm
+        optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+        # Train the model
+        train_model(model, criterion, optimizer, train_loader, epochs=10)
+
+        # Save the model
+        torch.save(model.state_dict(), model_path)
+
     model.eval()
-
-    # Define the loss function
-    criterion = nn.CrossEntropyLoss()
-
-    # Define the optimization algorithm
-    optimizer = optim.SGD(model.parameters(), lr=0.01)
-
-    # Train the model
-    train_model(model, criterion, optimizer, train_loader, epochs=1)
 
     # Test the model
     train_accuracy = test_model(model, train_loader, "training")
@@ -66,15 +76,29 @@ def pred_own_nn_model():
     print(f"Train accuracy: {train_accuracy:.2f}%")
     print(f"Test accuracy: {test_accuracy:.2f}%")
 
-    norm = Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    pred = model (norm(test_data))
-    return pred
+    pred = model (norm(pig_tensor))
+    return model, pred
 
-def pred_resnet50_model():
-    # values are standard normalization for ImageNet images, 
-    # from https://github.com/pytorch/examples/blob/master/imagenet/main.py
-    norm = Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+def perform_adversarial_attack(pig_tensor, model, norm, image_class_index):
+    epsilon = 2./255
 
+    delta = torch.zeros_like(pig_tensor, requires_grad=True)
+    opt = optim.SGD([delta], lr=1e-1)
+
+    for t in range(30):
+        pred = model(norm(pig_tensor + delta))
+        loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([image_class_index]))
+        if t % 5 == 0:
+            logging.info(f'Iteration {t} loss: {loss.item()}') # print loss.item())
+        
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
+        delta.data.clamp_(-epsilon, epsilon)
+    
+    logging.info(f'True class probability: {nn.Softmax(dim=1)(pred)[0,image_class_index].item()}')
+
+def pred_resnet50_model(norm):
     # load pre-trained ResNet50, and put into evaluation mode (necessary to e.g. turn off batchnorm)
     model = resnet50(weights=torchvision.models.ResNet50_Weights.DEFAULT)
     model.eval()
@@ -82,7 +106,7 @@ def pred_resnet50_model():
     pred = model(norm(pig_tensor))
     logging.info(f'Predictions from resnet50 model: {pred}')
 
-    return pred
+    return model, pred
 
 # Main program logic
 if __name__ == "__main__":
@@ -96,16 +120,36 @@ if __name__ == "__main__":
         'adverserial-attacks/data', 
         image_size)
     
-    pred_own_nn = pred_own_nn_model()
-    pred_resnet50 = pred_resnet50_model ()
+    # values are standard normalization for ImageNet images, 
+    # from https://github.com/pytorch/examples/blob/master/imagenet/main.py
+    norm = Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+
+    model_own_nn, pred_own_nn = pred_own_nn_model (norm, train_again=False)
+    model_resnet50, pred_resnet50 = pred_resnet50_model (norm)
 
     with open("adverserial-attacks/res/imagenet_class_index.json") as f:
         imagenet_classes = {int(i):x[1] for i,x in json.load(f).items()}
 
-    logging.info(f'ResNet50 prediction class: {imagenet_classes[pred_resnet50.max(dim=1)[1].item()]}')
-    logging.info(f'Affinity to target class: {nn.CrossEntropyLoss()(pred_resnet50,torch.LongTensor([341])).item()}')
+    logging.info(f'Predictions from own NN model: {pred_own_nn}')
+    logging.info(f'Predictions from resnet50 model: {pred_resnet50}')
         
-    logging.info(f'Own NN prediction class: {imagenet_classes[pred_own_nn.max(dim=1)[1].item()]}')
-    logging.info(f'Affinity to target class: {nn.CrossEntropyLoss()(pred_own_nn,torch.LongTensor([341])).item()}')
+    # Note: the model returns log probabilities, so we need to take an exp to get
+    #       the probabilities themselves.
+    logging.info(f'Size of pred_own_nn: {pred_own_nn.size()}')
+    logging.info(f'Size of pred_resnet50: {pred_resnet50.size()}')
+    pred_resnet50 = torch.exp(pred_resnet50) # Take exp to get probabilities, not log probabilities
 
+    # Resize pred_own_nn to match pred_resnet50
+    pred_own_nn = pred_own_nn.unsqueeze(0)
+    logging.info(f'Size of pred_own_nn after resizing: {pred_own_nn.size()}')
+
+    logging.info(f"Own NN prediction: {imagenet_classes[pred_own_nn.argmax().item()]}")
+    logging.info(f"ResNet50 prediction: {imagenet_classes[pred_resnet50.argmax().item()]}")
+
+    logging.info(f"Own NN probability: {pred_own_nn.max().item():.2f}")
+    logging.info(f"ResNet50 probability: {pred_resnet50.max().item():.2f}")
+
+    logging.info(f"Own NN - ResNet50: {pred_own_nn.max().item() - pred_resnet50.max().item():.2f}")
+
+    perform_adversarial_attack (pig_tensor, model_resnet50, norm, 341)
 
