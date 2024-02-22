@@ -79,25 +79,6 @@ def pred_own_nn_model(norm, train_again = False):
     pred = model (norm(pig_tensor))
     return model, pred
 
-def perform_adversarial_attack(pig_tensor, model, norm, image_class_index):
-    epsilon = 2./255
-
-    delta = torch.zeros_like(pig_tensor, requires_grad=True)
-    opt = optim.SGD([delta], lr=1e-1)
-
-    for t in range(30):
-        pred = model(norm(pig_tensor + delta))
-        loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([image_class_index]))
-        if t % 5 == 0:
-            logging.info(f'Iteration {t} loss: {loss.item()}') # print loss.item())
-        
-        opt.zero_grad()
-        loss.backward()
-        opt.step()
-        delta.data.clamp_(-epsilon, epsilon)
-    
-    logging.info(f'True class probability: {nn.Softmax(dim=1)(pred)[0,image_class_index].item()}')
-
 def pred_resnet50_model(norm):
     # load pre-trained ResNet50, and put into evaluation mode (necessary to e.g. turn off batchnorm)
     model = resnet50(weights=torchvision.models.ResNet50_Weights.DEFAULT)
@@ -108,13 +89,37 @@ def pred_resnet50_model(norm):
 
     return model, pred
 
+def perform_adversarial_attack(attack_type, image_tensor, delta, model, norm, orig_img_idx, tgt_img_idx):
+    epsilon = 2./255
+
+    opt = optim.SGD([delta], lr=1e-1) 
+
+    for t in range(100):
+        pred = model(norm(image_tensor + delta))
+        if attack_type == 'untargeted':
+            loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx]))
+        elif attack_type == 'targeted':
+             loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
+                    nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
+        if t % 10 == 0:
+            logging.info(f'{attack_type} :Iteration {t} loss: {loss.item()}') # print loss.item())
+        
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
+        delta.data.clamp_(-epsilon, epsilon)
+    
+    max_class = pred.max(dim=1)[1].item()
+    logging.info(f'Predicted class: {imagenet_classes[max_class]}')
+    logging.info(f'True class probability: {nn.Softmax(dim=1)(pred)[0,max_class].item()}')
+
 # Main program logic
 if __name__ == "__main__":
     image_size = 224
 
     pig_tensor = get_image_tensor("adverserial-attacks/res/pig.jpg", image_size)
     plt.imshow(pig_tensor[0].numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/pig_img.png', bbox_inches='tight')
+    plt.savefig('adverserial-attacks/out/orig_pig_img.png', bbox_inches='tight')
 
     train_data, test_data, train_loader, test_loader = load_data (
         'adverserial-attacks/data', 
@@ -151,5 +156,13 @@ if __name__ == "__main__":
 
     logging.info(f"Own NN - ResNet50: {pred_own_nn.max().item() - pred_resnet50.max().item():.2f}")
 
-    perform_adversarial_attack (pig_tensor, model_resnet50, norm, 341)
-
+    delta = torch.zeros_like(pig_tensor, requires_grad=True)
+    perform_adversarial_attack ('untargeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
+    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
+    plt.savefig('adverserial-attacks/out/untargeted_pig_img.png', bbox_inches='tight')
+    plt.imshow((50*delta+0.5)[0].detach().numpy().transpose(1,2,0))
+    plt.savefig('adverserial-attacks/out/delta_pig_img.png', bbox_inches='tight')
+    
+    perform_adversarial_attack ('targeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
+    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
+    plt.savefig('adverserial-attacks/out/targeted_pig_img.png', bbox_inches='tight')
