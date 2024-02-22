@@ -89,10 +89,21 @@ def pred_resnet50_model(norm):
 
     return model, pred
 
-def perform_adversarial_attack(attack_type, image_tensor, delta, model, norm, orig_img_idx, tgt_img_idx):
-    epsilon = 2./255
-
-    opt = optim.SGD([delta], lr=1e-1) 
+def perform_adversarial_attack(attack_method, attack_type, image_tensor, delta, model, norm, orig_img_idx, tgt_img_idx, epsilon = 2./255):
+    if attack_method == 'fgsm':
+        pred = model(norm(image_tensor + delta))
+        if attack_type == 'untargeted':
+            loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx]))
+        elif attack_type == 'targeted':
+             loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
+                    nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
+        loss.backward()
+        logging.info(f'{attack_method} - {attack_type} : loss: {loss.item()}') # print loss.item())
+        
+        return epsilon * delta.grad.detach().sign()
+    
+    #elif attack_method == 'pgd':
+    opt = optim.SGD([delta], lr=1e-1)
 
     for t in range(100):
         pred = model(norm(image_tensor + delta))
@@ -102,7 +113,7 @@ def perform_adversarial_attack(attack_type, image_tensor, delta, model, norm, or
              loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
                     nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
         if t % 10 == 0:
-            logging.info(f'{attack_type} :Iteration {t} loss: {loss.item()}') # print loss.item())
+            logging.info(f'{attack_method} - {attack_type} :Iteration {t} loss: {loss.item()}') # print loss.item())
         
         opt.zero_grad()
         loss.backward()
@@ -157,12 +168,20 @@ if __name__ == "__main__":
     logging.info(f"Own NN - ResNet50: {pred_own_nn.max().item() - pred_resnet50.max().item():.2f}")
 
     delta = torch.zeros_like(pig_tensor, requires_grad=True)
-    perform_adversarial_attack ('untargeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
+    perform_adversarial_attack ('fgsm', 'untargeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
     plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/untargeted_pig_img.png', bbox_inches='tight')
+    plt.savefig('adverserial-attacks/out/fgsm_untargeted_pig_img.png', bbox_inches='tight')
     plt.imshow((50*delta+0.5)[0].detach().numpy().transpose(1,2,0))
     plt.savefig('adverserial-attacks/out/delta_pig_img.png', bbox_inches='tight')
     
-    perform_adversarial_attack ('targeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
+    perform_adversarial_attack ('fgsm', 'targeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
     plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/targeted_pig_img.png', bbox_inches='tight')
+    plt.savefig('adverserial-attacks/out/fgsm_targeted_pig_img.png', bbox_inches='tight')
+
+    perform_adversarial_attack ('pgd', 'untargeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
+    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
+    plt.savefig('adverserial-attacks/out/pgd_targeted_pig_img.png', bbox_inches='tight')
+
+    perform_adversarial_attack ('pgd', 'targeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
+    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
+    plt.savefig('adverserial-attacks/out/pgd_targeted_pig_img.png', bbox_inches='tight')

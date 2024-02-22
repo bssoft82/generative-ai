@@ -6,7 +6,7 @@ import shutil
 def setup_logging():
     # Configure logging
 
-    log_files = glob.glob('adverserial-attacks/logs/archive/*.log')
+    log_files = glob.glob('adverserial-attacks/logs/*.log')
 
     # create log file name with incremental version
     log_file_name = 'adverserial-attacks/logs/applogs_'

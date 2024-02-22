@@ -1,0 +1,5 @@
+https://medium.com/swlh/gradient-based-adversarial-attacks-an-introduction-526238660dc9
+https://pyimagesearch.com/2021/03/01/adversarial-attacks-with-fgsm-fast-gradient-sign-method/
+https://jaketae.github.io/study/fgsm/
+https://adversarial-ml-tutorial.org/introduction/
+https://adversarial-ml-tutorial.org/adversarial_training/
