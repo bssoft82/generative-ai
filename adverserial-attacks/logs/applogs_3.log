@@ -1,0 +1,13 @@
+2024-02-22 09:34:09,370 - INFO - Epoch [1/5], Step [1/938], Loss: 2.3065
+2024-02-22 09:34:14,241 - INFO - Epoch [1/5], Step [101/938], Loss: 0.5551
+2024-02-22 09:34:19,150 - INFO - Epoch [1/5], Step [201/938], Loss: 0.5598
+2024-02-22 09:34:24,232 - INFO - Epoch [1/5], Step [301/938], Loss: 0.4955
+2024-02-22 09:34:29,098 - INFO - Epoch [1/5], Step [401/938], Loss: 0.4230
+2024-02-22 09:34:34,074 - INFO - Epoch [1/5], Step [501/938], Loss: 0.4151
+2024-02-22 09:34:38,957 - INFO - Epoch [1/5], Step [601/938], Loss: 0.3648
+2024-02-22 09:34:43,702 - INFO - Epoch [1/5], Step [701/938], Loss: 0.3573
+2024-02-22 09:34:48,506 - INFO - Epoch [1/5], Step [801/938], Loss: 0.3381
+2024-02-22 09:34:53,426 - INFO - Epoch [1/5], Step [901/938], Loss: 0.2338
+2024-02-22 09:34:55,143 - INFO - Training Accuracy: 89.47 %
+2024-02-22 09:35:26,594 - INFO - Accuracy of the network on the test dataset: 92.66 %
+2024-02-22 09:35:31,843 - INFO - Accuracy of the network on the test dataset: 92.93 %
