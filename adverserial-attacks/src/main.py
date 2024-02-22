@@ -89,17 +89,16 @@ def pred_resnet50_model(norm):
 
     return model, pred
 
-def perform_adversarial_attack(attack_method, attack_type, image_tensor, delta, model, norm, orig_img_idx, tgt_img_idx, epsilon = 2./255):
+def perform_adversarial_attack(attack_method, targeted, image_tensor, delta, model, norm, orig_img_idx, tgt_img_idx, epsilon = 2./255):
     if attack_method == 'fgsm':
         pred = model(norm(image_tensor + delta))
-        if attack_type == 'untargeted':
+        if targeted == False:
             loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx]))
-        elif attack_type == 'targeted':
-             loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
+        else:
+            loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
                     nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
         loss.backward()
-        logging.info(f'{attack_method} - {attack_type} : loss: {loss.item()}') # print loss.item())
-        
+        logging.info(f'method={attack_method} - targeted={targeted} - epsilon={epsilon}: loss: {loss.item()}')
         return epsilon * delta.grad.detach().sign()
     
     #elif attack_method == 'pgd':
@@ -107,13 +106,13 @@ def perform_adversarial_attack(attack_method, attack_type, image_tensor, delta, 
 
     for t in range(100):
         pred = model(norm(image_tensor + delta))
-        if attack_type == 'untargeted':
+        if targeted == False:
             loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx]))
-        elif attack_type == 'targeted':
-             loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
+        else:
+            loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
                     nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
         if t % 10 == 0:
-            logging.info(f'{attack_method} - {attack_type} :Iteration {t} loss: {loss.item()}') # print loss.item())
+            logging.info(f'method={attack_method} - targeted={targeted} - epsilon={epsilon} :Iteration {t} loss: {loss.item()}') # print loss.item())
         
         opt.zero_grad()
         loss.backward()
@@ -123,6 +122,14 @@ def perform_adversarial_attack(attack_method, attack_type, image_tensor, delta, 
     max_class = pred.max(dim=1)[1].item()
     logging.info(f'Predicted class: {imagenet_classes[max_class]}')
     logging.info(f'True class probability: {nn.Softmax(dim=1)(pred)[0,max_class].item()}')
+
+def generate_adversarial_attack_images(attack_method, targeted, image_tensor, model, norm, target_class, image_size, epsilon = 2./255):
+    delta = torch.zeros_like(image_tensor, requires_grad=True)
+    perform_adversarial_attack(attack_method, targeted, image_tensor, delta, model, norm, target_class, image_size, epsilon)
+    plt.imshow((image_tensor + delta)[0].detach().numpy().transpose(1,2,0))
+    plt.savefig(f'adverserial-attacks/out/{attack_method}_{"targeted" if targeted else "untargeted"}_{epsilon}_pig_img.png', bbox_inches='tight')
+    plt.imshow((50*delta+0.5)[0].detach().numpy().transpose(1,2,0))
+    plt.savefig('adverserial-attacks/out/delta_pig_img.png', bbox_inches='tight')
 
 # Main program logic
 if __name__ == "__main__":
@@ -167,21 +174,11 @@ if __name__ == "__main__":
 
     logging.info(f"Own NN - ResNet50: {pred_own_nn.max().item() - pred_resnet50.max().item():.2f}")
 
-    delta = torch.zeros_like(pig_tensor, requires_grad=True)
-    perform_adversarial_attack ('fgsm', 'untargeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
-    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/fgsm_untargeted_pig_img.png', bbox_inches='tight')
-    plt.imshow((50*delta+0.5)[0].detach().numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/delta_pig_img.png', bbox_inches='tight')
+    epsilons = [2./255, 0.1, 0.2, 0.3, 0.05]
     
-    perform_adversarial_attack ('fgsm', 'targeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
-    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/fgsm_targeted_pig_img.png', bbox_inches='tight')
+    for epsilon in epsilons:
+        generate_adversarial_attack_images('fgsm', False, pig_tensor, model_resnet50, norm, 341, 404, epsilon)
+        generate_adversarial_attack_images('fgsm', True, pig_tensor, model_resnet50, norm, 341, 404, epsilon)
+        generate_adversarial_attack_images('pgd', False, pig_tensor, model_resnet50, norm, 341, 404, epsilon)
+        generate_adversarial_attack_images('pgd', True, pig_tensor, model_resnet50, norm, 341, 404, epsilon)
 
-    perform_adversarial_attack ('pgd', 'untargeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
-    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/pgd_targeted_pig_img.png', bbox_inches='tight')
-
-    perform_adversarial_attack ('pgd', 'targeted', pig_tensor, delta, model_resnet50, norm, 341, 404)
-    plt.imshow((pig_tensor + delta)[0].detach().numpy().transpose(1,2,0))
-    plt.savefig('adverserial-attacks/out/pgd_targeted_pig_img.png', bbox_inches='tight')
