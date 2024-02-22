@@ -8,7 +8,7 @@ class NeuralNetwork(torch.nn.Module):
         Constructor for the Net class.
         """
         super(NeuralNetwork, self).__init__()
-        self.img_size = img_size
+        self.image_size = img_size
         self.fc1 = torch.nn.Linear(img_size**2, 128)  # 784 -> 128
         self.fc2 = torch.nn.Linear(128, 10)  # 128 -> 10
 
@@ -23,7 +23,7 @@ class NeuralNetwork(torch.nn.Module):
         Returns:
             x: output of the neural network
         """
-        x = x.view(-1, self.img_size**2)  # flatten input image
+        x = x.view(-1, self.image_size**2)  # flatten input image
         x = torch.relu(self.fc1(x))  # activation function for hidden layer
         x = self.fc2(x)
         return x
@@ -67,7 +67,7 @@ def train_model(model, criterion, optimizer, train_loader, epochs):
 
         accuracy = 100 * correct / total
         logging.info(f'Training Accuracy: {accuracy:.2f} %')
-        return accuracy
+    return accuracy
     
 def test_model(model, test_loader, dataset_name):
     """
