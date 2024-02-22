@@ -69,7 +69,7 @@ def train_model(model, criterion, optimizer, train_loader, epochs):
         logging.info(f'Training Accuracy: {accuracy:.2f} %')
         return accuracy
     
-def test_model(model, test_loader, dataset):
+def test_model(model, test_loader, dataset_name):
     """
     Test the model.
 
@@ -91,5 +91,5 @@ def test_model(model, test_loader, dataset):
             correct += (predicted == labels).sum().item()
     
     accuracy = 100 * correct / total
-    logging.info(f'Accuracy of the network on the {dataset} dataset: {accuracy:.2f} %')
+    logging.info(f'Accuracy of the network on the {dataset_name} dataset: {accuracy:.2f} %')
     return accuracy
