@@ -1,0 +1,24 @@
+2024-02-24 16:19:42,297 - INFO - Using device: cpu
+2024-02-24 16:19:42,347 - INFO - Loading existing model from adverserial-attacks/models/cnn_model.pth
+2024-02-24 16:20:21,988 - INFO - Epsilon: 0	Test Accuracy = 9887 / 10000 = 0.988700
+2024-02-24 16:20:21,988 - INFO - Epsilon: 0	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:21:04,149 - INFO - Epsilon: 0	Test Accuracy = 9887 / 10000 = 0.988700
+2024-02-24 16:21:04,149 - INFO - Epsilon: 0	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:21:44,102 - INFO - Epsilon: 0.05	Test Accuracy = 9283 / 10000 = 0.928300
+2024-02-24 16:21:44,102 - INFO - Epsilon: 0.05	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:22:25,990 - INFO - Epsilon: 0.05	Test Accuracy = 9856 / 10000 = 0.985600
+2024-02-24 16:22:25,990 - INFO - Epsilon: 0.05	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:23:06,370 - INFO - Epsilon: 0.1	Test Accuracy = 7595 / 10000 = 0.759500
+2024-02-24 16:23:06,370 - INFO - Epsilon: 0.1	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:23:48,973 - INFO - Epsilon: 0.1	Test Accuracy = 9800 / 10000 = 0.980000
+2024-02-24 16:23:48,973 - INFO - Epsilon: 0.1	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:24:38,589 - INFO - Epsilon: 0.15	Test Accuracy = 4923 / 10000 = 0.492300
+2024-02-24 16:24:38,589 - INFO - Epsilon: 0.15	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:25:23,658 - INFO - Epsilon: 0.15	Test Accuracy = 9761 / 10000 = 0.976100
+2024-02-24 16:25:23,658 - INFO - Epsilon: 0.15	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:26:12,184 - INFO - Epsilon: 0.2	Test Accuracy = 2909 / 10000 = 0.290900
+2024-02-24 16:26:12,184 - INFO - Epsilon: 0.2	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:27:01,350 - INFO - Epsilon: 0.2	Test Accuracy = 9597 / 10000 = 0.959700
+2024-02-24 16:27:01,350 - INFO - Epsilon: 0.2	Targeted Test Accuracy = 1015 / 10000 = 0.101500
+2024-02-24 16:27:49,644 - INFO - Epsilon: 0.25	Test Accuracy = 1784 / 10000 = 0.178400
+2024-02-24 16:27:49,644 - INFO - Epsilon: 0.25	Targeted Test Accuracy = 1015 / 10000 = 0.101500

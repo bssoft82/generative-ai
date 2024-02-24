@@ -1,0 +1,18 @@
+2024-02-24 16:29:36,562 - INFO - Using device: cpu
+2024-02-24 16:29:36,607 - INFO - Loading existing model from adverserial-attacks/models/cnn_model.pth
+2024-02-24 16:30:17,363 - INFO - UnTargeted - fgsm	Epsilon: 0	Test Accuracy = 9887 / 10000 = 0.9887
+2024-02-24 16:30:17,364 - INFO - Targeted - fgsm	Epsilon: 0	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 16:30:59,369 - INFO - UnTargeted - pgd	Epsilon: 0	Test Accuracy = 9887 / 10000 = 0.9887
+2024-02-24 16:30:59,369 - INFO - Targeted - pgd	Epsilon: 0	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 16:31:39,089 - INFO - UnTargeted - fgsm	Epsilon: 0.1	Test Accuracy = 7595 / 10000 = 0.7595
+2024-02-24 16:31:39,089 - INFO - Targeted - fgsm	Epsilon: 0.1	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 16:32:21,565 - INFO - UnTargeted - pgd	Epsilon: 0.1	Test Accuracy = 9800 / 10000 = 0.98
+2024-02-24 16:32:21,566 - INFO - Targeted - pgd	Epsilon: 0.1	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 16:33:00,855 - INFO - UnTargeted - fgsm	Epsilon: 0.2	Test Accuracy = 2909 / 10000 = 0.2909
+2024-02-24 16:33:00,855 - INFO - Targeted - fgsm	Epsilon: 0.2	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 16:33:42,174 - INFO - UnTargeted - pgd	Epsilon: 0.2	Test Accuracy = 9597 / 10000 = 0.9597
+2024-02-24 16:33:42,174 - INFO - Targeted - pgd	Epsilon: 0.2	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 16:34:21,896 - INFO - UnTargeted - fgsm	Epsilon: 0.3	Test Accuracy = 1164 / 10000 = 0.1164
+2024-02-24 16:34:21,896 - INFO - Targeted - fgsm	Epsilon: 0.3	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 16:35:04,196 - INFO - UnTargeted - pgd	Epsilon: 0.3	Test Accuracy = 8166 / 10000 = 0.8166
+2024-02-24 16:35:04,197 - INFO - Targeted - pgd	Epsilon: 0.3	Test Accuracy = 1015 / 10000 = 0.1015

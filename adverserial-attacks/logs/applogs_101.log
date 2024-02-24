@@ -1,0 +1,8 @@
+2024-02-24 16:58:52,428 - INFO - Using device: cpu
+2024-02-24 16:58:52,467 - INFO - Loading existing model from adverserial-attacks/models/cnn_model.pth
+2024-02-24 16:59:30,980 - INFO - UnTargeted - fgsm	Epsilon: 0	Test Accuracy = 9887 / 10000 = 0.9887
+2024-02-24 16:59:30,980 - INFO - Targeted - fgsm	Epsilon: 0	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 17:00:10,413 - INFO - UnTargeted - pgd	Epsilon: 0	Test Accuracy = 9887 / 10000 = 0.9887
+2024-02-24 17:00:10,413 - INFO - Targeted - pgd	Epsilon: 0	Test Accuracy = 1015 / 10000 = 0.1015
+2024-02-24 17:00:49,060 - INFO - UnTargeted - fgsm	Epsilon: 0.1	Test Accuracy = 7595 / 10000 = 0.7595
+2024-02-24 17:00:49,060 - INFO - Targeted - fgsm	Epsilon: 0.1	Test Accuracy = 1015 / 10000 = 0.1015

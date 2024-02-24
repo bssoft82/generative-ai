@@ -1,0 +1,2 @@
+2024-02-24 16:09:21,439 - INFO - Using device: cpu
+2024-02-24 16:09:21,465 - INFO - Loading existing model from adverserial-attacks/models/cnn_model.pth

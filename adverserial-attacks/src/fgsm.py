@@ -1,13 +1,21 @@
 import torch
 
 # FGSM attack code
-def fgsm_attack(image, epsilon, data_grad):
-    # Collect the element-wise sign of the data gradient
-    sign_data_grad = data_grad.sign()
+def adversarial_attack(image, epsilon, data_grad, target_image=None, attack_algo='fgsm'):
     # Create the perturbed image by adjusting each pixel of the input image
-    perturbed_image = image + epsilon*sign_data_grad
-    # Adding clipping to maintain [0,1] range
-    perturbed_image = torch.clamp(perturbed_image, 0, 1)
+    if attack_algo == 'fgsm':
+        # Collect the element-wise sign of the data gradient
+        sign_data_grad = data_grad.sign()
+        perturbed_image = image + epsilon * sign_data_grad
+        if target_image is not None:
+            perturbed_image = target_image - epsilon * sign_data_grad
+        # Adding clipping to maintain [0,1] range
+        perturbed_image = torch.clamp(perturbed_image, 0, 1)
+    else:
+        perturbed_image = image + epsilon * torch.sign(data_grad - image + 0.5)
+        if target_image is not None:
+            perturbed_image += image + epsilon * torch.sign(data_grad - target_image + 0.5)
+        perturbed_image = torch.clamp(perturbed_image, image - epsilon, image + epsilon)
     # Return the perturbed image
     return perturbed_image
 
