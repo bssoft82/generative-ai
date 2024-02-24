@@ -1,0 +1,3 @@
+2024-02-23 20:04:55,993 - INFO - Using device: cpu
+2024-02-23 20:04:56,015 - INFO - Loading existing model from adverserial-attacks/models/cnn_model.pth
+2024-02-23 20:05:19,515 - INFO - Epsilon: 0	Test Accuracy = 9887 / 10000 = 0.988700

@@ -1,0 +1,7 @@
+2024-02-23 17:57:45,485 - INFO - Using device: cpu
+2024-02-23 17:57:45,509 - INFO - Training a new model
+2024-02-23 17:58:12,127 - INFO - Epoch {epoch}: Accuracy on the test set: 92.280%
+2024-02-23 17:58:39,208 - INFO - Epoch {epoch}: Accuracy on the test set: 93.850%
+2024-02-23 17:59:05,330 - INFO - Epoch {epoch}: Accuracy on the test set: 94.280%
+2024-02-23 17:59:31,578 - INFO - Epoch {epoch}: Accuracy on the test set: 95.180%
+2024-02-23 17:59:57,300 - INFO - Epoch {epoch}: Accuracy on the test set: 95.700%

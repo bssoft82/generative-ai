@@ -1,0 +1,113 @@
+2024-02-23 18:27:05,643 - INFO - Using device: cpu
+2024-02-23 18:27:05,667 - INFO - Training a new model
+2024-02-23 18:27:05,699 - INFO - Epoch 1 iteration 1: Loss 0.023 Accuracy 9.38 %
+2024-02-23 18:27:08,257 - INFO - Epoch 1 iteration 101: Loss 1.557 Accuracy 46.70 %
+2024-02-23 18:27:10,858 - INFO - Epoch 1 iteration 201: Loss 0.685 Accuracy 78.58 %
+2024-02-23 18:27:13,423 - INFO - Epoch 1 iteration 301: Loss 0.515 Accuracy 84.36 %
+2024-02-23 18:27:15,961 - INFO - Epoch 1 iteration 401: Loss 0.426 Accuracy 87.11 %
+2024-02-23 18:27:18,339 - INFO - Epoch 1 iteration 501: Loss 0.405 Accuracy 87.80 %
+2024-02-23 18:27:20,850 - INFO - Epoch 1 iteration 601: Loss 0.371 Accuracy 89.25 %
+2024-02-23 18:27:23,551 - INFO - Epoch 1 iteration 701: Loss 0.337 Accuracy 90.03 %
+2024-02-23 18:27:26,153 - INFO - Epoch 1 iteration 801: Loss 0.322 Accuracy 90.45 %
+2024-02-23 18:27:28,685 - INFO - Epoch 1 iteration 901: Loss 0.307 Accuracy 90.55 %
+2024-02-23 18:27:32,270 - INFO - Epoch 1: Test Loss 0.280 Test Accuracy 91.85%
+2024-02-23 18:27:32,296 - INFO - Epoch 2 iteration 1: Loss 0.003 Accuracy 93.75 %
+2024-02-23 18:27:34,835 - INFO - Epoch 2 iteration 101: Loss 0.286 Accuracy 91.75 %
+2024-02-23 18:27:37,217 - INFO - Epoch 2 iteration 201: Loss 0.261 Accuracy 92.56 %
+2024-02-23 18:27:39,670 - INFO - Epoch 2 iteration 301: Loss 0.247 Accuracy 92.64 %
+2024-02-23 18:27:42,290 - INFO - Epoch 2 iteration 401: Loss 0.266 Accuracy 92.22 %
+2024-02-23 18:27:44,738 - INFO - Epoch 2 iteration 501: Loss 0.217 Accuracy 93.52 %
+2024-02-23 18:27:47,263 - INFO - Epoch 2 iteration 601: Loss 0.240 Accuracy 92.91 %
+2024-02-23 18:27:49,803 - INFO - Epoch 2 iteration 701: Loss 0.227 Accuracy 93.28 %
+2024-02-23 18:27:52,276 - INFO - Epoch 2 iteration 801: Loss 0.224 Accuracy 93.33 %
+2024-02-23 18:27:54,874 - INFO - Epoch 2 iteration 901: Loss 0.228 Accuracy 93.23 %
+2024-02-23 18:27:58,300 - INFO - Epoch 2: Test Loss 0.183 Test Accuracy 94.24%
+2024-02-23 18:27:58,323 - INFO - Epoch 3 iteration 1: Loss 0.001 Accuracy 96.88 %
+2024-02-23 18:28:00,798 - INFO - Epoch 3 iteration 101: Loss 0.195 Accuracy 93.98 %
+2024-02-23 18:28:03,470 - INFO - Epoch 3 iteration 201: Loss 0.205 Accuracy 94.14 %
+2024-02-23 18:28:05,986 - INFO - Epoch 3 iteration 301: Loss 0.205 Accuracy 93.84 %
+2024-02-23 18:28:08,369 - INFO - Epoch 3 iteration 401: Loss 0.188 Accuracy 94.61 %
+2024-02-23 18:28:10,964 - INFO - Epoch 3 iteration 501: Loss 0.195 Accuracy 94.52 %
+2024-02-23 18:28:13,421 - INFO - Epoch 3 iteration 601: Loss 0.199 Accuracy 93.84 %
+2024-02-23 18:28:15,953 - INFO - Epoch 3 iteration 701: Loss 0.174 Accuracy 95.05 %
+2024-02-23 18:28:18,278 - INFO - Epoch 3 iteration 801: Loss 0.197 Accuracy 94.06 %
+2024-02-23 18:28:20,717 - INFO - Epoch 3 iteration 901: Loss 0.194 Accuracy 94.53 %
+2024-02-23 18:28:24,228 - INFO - Epoch 3: Test Loss 0.168 Test Accuracy 94.95%
+2024-02-23 18:28:24,251 - INFO - Epoch 4 iteration 1: Loss 0.002 Accuracy 93.75 %
+2024-02-23 18:28:26,992 - INFO - Epoch 4 iteration 101: Loss 0.172 Accuracy 94.67 %
+2024-02-23 18:28:29,354 - INFO - Epoch 4 iteration 201: Loss 0.185 Accuracy 94.47 %
+2024-02-23 18:28:31,912 - INFO - Epoch 4 iteration 301: Loss 0.180 Accuracy 94.72 %
+2024-02-23 18:28:34,370 - INFO - Epoch 4 iteration 401: Loss 0.180 Accuracy 94.89 %
+2024-02-23 18:28:36,869 - INFO - Epoch 4 iteration 501: Loss 0.171 Accuracy 95.17 %
+2024-02-23 18:28:39,344 - INFO - Epoch 4 iteration 601: Loss 0.163 Accuracy 95.36 %
+2024-02-23 18:28:41,751 - INFO - Epoch 4 iteration 701: Loss 0.170 Accuracy 95.16 %
+2024-02-23 18:28:44,439 - INFO - Epoch 4 iteration 801: Loss 0.178 Accuracy 95.12 %
+2024-02-23 18:28:47,071 - INFO - Epoch 4 iteration 901: Loss 0.167 Accuracy 95.08 %
+2024-02-23 18:28:50,503 - INFO - Epoch 4: Test Loss 0.145 Test Accuracy 95.34%
+2024-02-23 18:28:50,526 - INFO - Epoch 5 iteration 1: Loss 0.003 Accuracy 92.19 %
+2024-02-23 18:28:53,010 - INFO - Epoch 5 iteration 101: Loss 0.158 Accuracy 95.28 %
+2024-02-23 18:28:55,667 - INFO - Epoch 5 iteration 201: Loss 0.158 Accuracy 95.52 %
+2024-02-23 18:28:58,090 - INFO - Epoch 5 iteration 301: Loss 0.160 Accuracy 95.19 %
+2024-02-23 18:29:00,588 - INFO - Epoch 5 iteration 401: Loss 0.167 Accuracy 95.12 %
+2024-02-23 18:29:03,021 - INFO - Epoch 5 iteration 501: Loss 0.183 Accuracy 94.83 %
+2024-02-23 18:29:05,620 - INFO - Epoch 5 iteration 601: Loss 0.165 Accuracy 95.47 %
+2024-02-23 18:29:08,011 - INFO - Epoch 5 iteration 701: Loss 0.160 Accuracy 95.05 %
+2024-02-23 18:29:10,535 - INFO - Epoch 5 iteration 801: Loss 0.156 Accuracy 95.14 %
+2024-02-23 18:29:12,982 - INFO - Epoch 5 iteration 901: Loss 0.157 Accuracy 95.53 %
+2024-02-23 18:29:16,606 - INFO - Epoch 5: Test Loss 0.142 Test Accuracy 95.63%
+2024-02-23 18:29:16,630 - INFO - Epoch 6 iteration 1: Loss 0.001 Accuracy 100.00 %
+2024-02-23 18:29:19,039 - INFO - Epoch 6 iteration 101: Loss 0.158 Accuracy 95.41 %
+2024-02-23 18:29:21,440 - INFO - Epoch 6 iteration 201: Loss 0.158 Accuracy 95.34 %
+2024-02-23 18:29:23,919 - INFO - Epoch 6 iteration 301: Loss 0.155 Accuracy 95.50 %
+2024-02-23 18:29:26,531 - INFO - Epoch 6 iteration 401: Loss 0.159 Accuracy 95.39 %
+2024-02-23 18:29:29,065 - INFO - Epoch 6 iteration 501: Loss 0.149 Accuracy 95.52 %
+2024-02-23 18:29:31,663 - INFO - Epoch 6 iteration 601: Loss 0.155 Accuracy 95.72 %
+2024-02-23 18:29:34,206 - INFO - Epoch 6 iteration 701: Loss 0.161 Accuracy 95.28 %
+2024-02-23 18:29:36,690 - INFO - Epoch 6 iteration 801: Loss 0.144 Accuracy 95.58 %
+2024-02-23 18:29:39,212 - INFO - Epoch 6 iteration 901: Loss 0.149 Accuracy 95.33 %
+2024-02-23 18:29:42,482 - INFO - Epoch 6: Test Loss 0.162 Test Accuracy 96.28%
+2024-02-23 18:29:42,505 - INFO - Epoch 7 iteration 1: Loss 0.002 Accuracy 96.88 %
+2024-02-23 18:29:45,041 - INFO - Epoch 7 iteration 101: Loss 0.143 Accuracy 95.62 %
+2024-02-23 18:29:47,517 - INFO - Epoch 7 iteration 201: Loss 0.142 Accuracy 95.83 %
+2024-02-23 18:29:50,094 - INFO - Epoch 7 iteration 301: Loss 0.127 Accuracy 96.27 %
+2024-02-23 18:29:52,461 - INFO - Epoch 7 iteration 401: Loss 0.152 Accuracy 95.83 %
+2024-02-23 18:29:54,948 - INFO - Epoch 7 iteration 501: Loss 0.136 Accuracy 95.95 %
+2024-02-23 18:29:57,474 - INFO - Epoch 7 iteration 601: Loss 0.154 Accuracy 95.62 %
+2024-02-23 18:29:59,901 - INFO - Epoch 7 iteration 701: Loss 0.140 Accuracy 95.73 %
+2024-02-23 18:30:02,404 - INFO - Epoch 7 iteration 801: Loss 0.136 Accuracy 96.14 %
+2024-02-23 18:30:04,866 - INFO - Epoch 7 iteration 901: Loss 0.145 Accuracy 95.91 %
+2024-02-23 18:30:08,434 - INFO - Epoch 7: Test Loss 0.133 Test Accuracy 95.80%
+2024-02-23 18:30:08,466 - INFO - Epoch 8 iteration 1: Loss 0.001 Accuracy 96.88 %
+2024-02-23 18:30:10,905 - INFO - Epoch 8 iteration 101: Loss 0.149 Accuracy 95.64 %
+2024-02-23 18:30:13,642 - INFO - Epoch 8 iteration 201: Loss 0.125 Accuracy 96.19 %
+2024-02-23 18:30:16,188 - INFO - Epoch 8 iteration 301: Loss 0.138 Accuracy 95.80 %
+2024-02-23 18:30:18,799 - INFO - Epoch 8 iteration 401: Loss 0.148 Accuracy 95.64 %
+2024-02-23 18:30:21,235 - INFO - Epoch 8 iteration 501: Loss 0.143 Accuracy 95.91 %
+2024-02-23 18:30:23,722 - INFO - Epoch 8 iteration 601: Loss 0.139 Accuracy 96.02 %
+2024-02-23 18:30:26,211 - INFO - Epoch 8 iteration 701: Loss 0.144 Accuracy 95.77 %
+2024-02-23 18:30:28,846 - INFO - Epoch 8 iteration 801: Loss 0.137 Accuracy 95.62 %
+2024-02-23 18:30:31,257 - INFO - Epoch 8 iteration 901: Loss 0.161 Accuracy 95.47 %
+2024-02-23 18:30:34,673 - INFO - Epoch 8: Test Loss 0.136 Test Accuracy 96.03%
+2024-02-23 18:30:34,705 - INFO - Epoch 9 iteration 1: Loss 0.001 Accuracy 100.00 %
+2024-02-23 18:30:37,304 - INFO - Epoch 9 iteration 101: Loss 0.139 Accuracy 96.08 %
+2024-02-23 18:30:39,771 - INFO - Epoch 9 iteration 201: Loss 0.135 Accuracy 95.92 %
+2024-02-23 18:30:42,173 - INFO - Epoch 9 iteration 301: Loss 0.137 Accuracy 95.83 %
+2024-02-23 18:30:44,552 - INFO - Epoch 9 iteration 401: Loss 0.138 Accuracy 95.95 %
+2024-02-23 18:30:47,096 - INFO - Epoch 9 iteration 501: Loss 0.131 Accuracy 96.03 %
+2024-02-23 18:30:49,512 - INFO - Epoch 9 iteration 601: Loss 0.130 Accuracy 96.28 %
+2024-02-23 18:30:52,147 - INFO - Epoch 9 iteration 701: Loss 0.132 Accuracy 96.27 %
+2024-02-23 18:30:54,691 - INFO - Epoch 9 iteration 801: Loss 0.122 Accuracy 96.53 %
+2024-02-23 18:30:57,216 - INFO - Epoch 9 iteration 901: Loss 0.138 Accuracy 95.98 %
+2024-02-23 18:31:00,638 - INFO - Epoch 9: Test Loss 0.120 Test Accuracy 96.25%
+2024-02-23 18:31:00,664 - INFO - Epoch 10 iteration 1: Loss 0.001 Accuracy 98.44 %
+2024-02-23 18:31:03,124 - INFO - Epoch 10 iteration 101: Loss 0.132 Accuracy 96.14 %
+2024-02-23 18:31:05,519 - INFO - Epoch 10 iteration 201: Loss 0.130 Accuracy 96.28 %
+2024-02-23 18:31:08,079 - INFO - Epoch 10 iteration 301: Loss 0.117 Accuracy 96.48 %
+2024-02-23 18:31:10,497 - INFO - Epoch 10 iteration 401: Loss 0.117 Accuracy 96.30 %
+2024-02-23 18:31:13,005 - INFO - Epoch 10 iteration 501: Loss 0.134 Accuracy 96.14 %
+2024-02-23 18:31:15,423 - INFO - Epoch 10 iteration 601: Loss 0.126 Accuracy 96.44 %
+2024-02-23 18:31:17,901 - INFO - Epoch 10 iteration 701: Loss 0.127 Accuracy 96.08 %
+2024-02-23 18:31:20,372 - INFO - Epoch 10 iteration 801: Loss 0.130 Accuracy 96.16 %
+2024-02-23 18:31:22,760 - INFO - Epoch 10 iteration 901: Loss 0.121 Accuracy 96.38 %
+2024-02-23 18:31:26,295 - INFO - Epoch 10: Test Loss 0.121 Test Accuracy 96.17%
+2024-02-23 18:31:26,297 - INFO - Model saved to adverserial-attacks/models/cnn_model.pth

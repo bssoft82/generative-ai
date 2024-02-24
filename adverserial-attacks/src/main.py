@@ -13,7 +13,8 @@ from torchvision.models import resnet50
 from PIL import Image
 
 from logging_config import setup_logging
-from neural_network import NeuralNetwork, test_model, train_model
+#from neural_network import NeuralNetwork, test_model, train_model
+from cnn import Net, test_model, train_model
 
 # Setup logging
 setup_logging()
@@ -41,29 +42,21 @@ def load_data (root_folder, image_size):
                                             ]))
 
     # create data loaders
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, shuffle=False)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=1, shuffle=True)
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False)
     return train_dataset, test_dataset, train_loader, test_loader
 
 def pred_own_nn_model(norm, train_again = False):
-    model_path = "adverserial-attacks/models/model.pth"
+    model_path = "adverserial-attacks/models/model_net.pth"
+    model = Net().to(device)
     if os.path.isfile(model_path) and not train_again:
         print(f"Loading existing model from {model_path}")
-        model = NeuralNetwork(image_size)
-        model.load_state_dict(torch.load(model_path))
+        model.load_state_dict(torch.load("./data/lenet_mnist_model.pth.pt", map_location=device))
     else:
         print("Training a new model")
-        model = NeuralNetwork(image_size)
-        # Define the loss function
         criterion = nn.CrossEntropyLoss()
-
-        # Define the optimization algorithm
-        optimizer = optim.SGD(model.parameters(), lr=0.01)
-
-        # Train the model
+        optimizer = optim.Adam(model.parameters(), lr=0.001)
         train_model(model, criterion, optimizer, train_loader, epochs=10)
-
-        # Save the model
         torch.save(model.state_dict(), model_path)
 
     model.eval()
@@ -78,6 +71,40 @@ def pred_own_nn_model(norm, train_again = False):
 
     pred = model (norm(pig_tensor))
     return model, pred
+
+# def pred_own_nn_model_old(norm, train_again = False):
+#     model_path = "adverserial-attacks/models/model.pth"
+#     if os.path.isfile(model_path) and not train_again:
+#         print(f"Loading existing model from {model_path}")
+#         model = NeuralNetwork(image_size)
+#         model.load_state_dict(torch.load(model_path))
+#     else:
+#         print("Training a new model")
+#         model = NeuralNetwork(image_size)
+#         # Define the loss function
+#         criterion = nn.CrossEntropyLoss()
+
+#         # Define the optimization algorithm
+#         optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+#         # Train the model
+#         train_model(model, criterion, optimizer, train_loader, epochs=10)
+
+#         # Save the model
+#         torch.save(model.state_dict(), model_path)
+
+#     model.eval()
+
+#     # Test the model
+#     train_accuracy = test_model(model, train_loader, "training")
+#     test_accuracy = test_model(model, test_loader, "test")
+
+#     # Compare the accuracy
+#     print(f"Train accuracy: {train_accuracy:.2f}%")
+#     print(f"Test accuracy: {test_accuracy:.2f}%")
+
+#     pred = model (norm(pig_tensor))
+#     return model, pred
 
 def pred_resnet50_model(norm):
     # load pre-trained ResNet50, and put into evaluation mode (necessary to e.g. turn off batchnorm)
@@ -99,25 +126,26 @@ def perform_adversarial_attack(attack_method, targeted, image_tensor, delta, mod
                     nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
         loss.backward()
         logging.info(f'method={attack_method} - targeted={targeted} - epsilon={epsilon}: loss: {loss.item()}')
-        return epsilon * delta.grad.detach().sign()
+        loss = epsilon * delta.grad.detach().sign()
     
     #elif attack_method == 'pgd':
-    opt = optim.SGD([delta], lr=1e-1)
+    else:
+        opt = optim.SGD([delta], lr=1e-1)
 
-    for t in range(100):
-        pred = model(norm(image_tensor + delta))
-        if targeted == False:
-            loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx]))
-        else:
-            loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
-                    nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
-        if t % 10 == 0:
-            logging.info(f'method={attack_method} - targeted={targeted} - epsilon={epsilon} :Iteration {t} loss: {loss.item()}') # print loss.item())
-        
-        opt.zero_grad()
-        loss.backward()
-        opt.step()
-        delta.data.clamp_(-epsilon, epsilon)
+        for t in range(100):
+            pred = model(norm(image_tensor + delta))
+            if targeted == False:
+                loss = -nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx]))
+            else:
+                loss = (-nn.CrossEntropyLoss()(pred, torch.LongTensor([orig_img_idx])) + 
+                        nn.CrossEntropyLoss()(pred, torch.LongTensor([tgt_img_idx])))
+            if t % 10 == 0:
+                logging.info(f'method={attack_method} - targeted={targeted} - epsilon={epsilon} :Iteration {t} loss: {loss.item()}') # print loss.item())
+            
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
+            delta.data.clamp_(-epsilon, epsilon)
     
     max_class = pred.max(dim=1)[1].item()
     logging.info(f'Predicted class: {imagenet_classes[max_class]}')
@@ -134,6 +162,7 @@ def generate_adversarial_attack_images(attack_method, targeted, image_tensor, mo
 # Main program logic
 if __name__ == "__main__":
     image_size = 224
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     pig_tensor = get_image_tensor("adverserial-attacks/res/pig.jpg", image_size)
     plt.imshow(pig_tensor[0].numpy().transpose(1,2,0))
@@ -182,3 +211,7 @@ if __name__ == "__main__":
         generate_adversarial_attack_images('pgd', False, pig_tensor, model_resnet50, norm, 341, 404, epsilon)
         generate_adversarial_attack_images('pgd', True, pig_tensor, model_resnet50, norm, 341, 404, epsilon)
 
+        generate_adversarial_attack_images('fgsm', False, pig_tensor, model_own_nn, norm, 341, 404, epsilon)
+        generate_adversarial_attack_images('fgsm', True, pig_tensor, model_own_nn, norm, 341, 404, epsilon)
+        generate_adversarial_attack_images('pgd', False, pig_tensor, model_own_nn, norm, 341, 404, epsilon)
+        generate_adversarial_attack_images('pgd', True, pig_tensor, model_own_nn, norm, 341, 404, epsilon)

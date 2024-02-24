@@ -17,3 +17,12 @@ def setup_logging():
     log_file_name += '.log'
     logging.basicConfig(filename=log_file_name, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')            
             
+def log_entry(func):
+    def wrapper(*args, **kwargs):
+        logging.debug(f"Entering {func.__name__}")
+        result = func(*args, **kwargs)
+        logging.debug(f"Exiting {func.__name__}")
+        return result
+    return wrapper
+
+

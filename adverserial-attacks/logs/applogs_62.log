@@ -1,0 +1,14 @@
+2024-02-23 18:42:48,268 - INFO - Using device: cpu
+2024-02-23 18:42:48,294 - INFO - Training a new model
+2024-02-23 18:42:48,327 - INFO - Epoch 1 iteration 1: Loss 0.023 Accuracy 9.38 %
+2024-02-23 18:42:51,023 - INFO - Epoch 1 iteration 101: Loss 1.461 Accuracy 50.02 %
+2024-02-23 18:42:53,366 - INFO - Epoch 1 iteration 201: Loss 0.738 Accuracy 77.16 %
+2024-02-23 18:42:55,920 - INFO - Epoch 1 iteration 301: Loss 0.560 Accuracy 82.94 %
+2024-02-23 18:42:58,276 - INFO - Epoch 1 iteration 401: Loss 0.500 Accuracy 84.77 %
+2024-02-23 18:43:00,763 - INFO - Epoch 1 iteration 501: Loss 0.423 Accuracy 87.17 %
+2024-02-23 18:43:03,243 - INFO - Epoch 1 iteration 601: Loss 0.387 Accuracy 88.44 %
+2024-02-23 18:43:05,766 - INFO - Epoch 1 iteration 701: Loss 0.353 Accuracy 89.44 %
+2024-02-23 18:43:08,254 - INFO - Epoch 1 iteration 801: Loss 0.342 Accuracy 89.91 %
+2024-02-23 18:43:10,744 - INFO - Epoch 1 iteration 901: Loss 0.319 Accuracy 89.80 %
+2024-02-23 18:43:14,163 - INFO - Epoch 1: Test Loss 0.307 Test Accuracy 91.06%
+2024-02-23 18:43:14,164 - INFO - Model saved to adverserial-attacks/models/cnn_model.pth

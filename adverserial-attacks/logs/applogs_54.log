@@ -1,0 +1,12 @@
+2024-02-23 18:03:47,795 - INFO - Using device: cpu
+2024-02-23 18:03:47,820 - INFO - Training a new model
+2024-02-23 18:04:13,804 - INFO - Epoch 1: Accuracy on the test set: 91.72 %.3f%%
+2024-02-23 18:04:39,328 - INFO - Epoch 2: Accuracy on the test set: 93.48 %.3f%%
+2024-02-23 18:05:06,327 - INFO - Epoch 3: Accuracy on the test set: 94.86 %.3f%%
+2024-02-23 18:05:32,619 - INFO - Epoch 4: Accuracy on the test set: 95.38 %.3f%%
+2024-02-23 18:05:58,143 - INFO - Epoch 5: Accuracy on the test set: 95.37 %.3f%%
+2024-02-23 18:06:23,960 - INFO - Epoch 6: Accuracy on the test set: 95.39 %.3f%%
+2024-02-23 18:06:49,654 - INFO - Epoch 7: Accuracy on the test set: 95.87 %.3f%%
+2024-02-23 18:07:16,108 - INFO - Epoch 8: Accuracy on the test set: 96.26 %.3f%%
+2024-02-23 18:07:42,090 - INFO - Epoch 9: Accuracy on the test set: 95.95 %.3f%%
+2024-02-23 18:08:07,855 - INFO - Epoch 10: Accuracy on the test set: 96.16 %.3f%%
